@@ -20,6 +20,9 @@ public class Programm {
         decryptData(text.getEncoded(),);
 
         //Prova alguns dels mètodes que proporciona la classe SecretKey
+        System.out.println(text.getEncoded());
+        System.out.println(text.getAlgorithm());
+        System.out.println(text.getFormat());
 
         //Desxifra el text del punt 6 i comprova que donant una paraula de pas incorrecte salta l'excepció BadPaddingException
 
