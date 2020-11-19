@@ -38,7 +38,7 @@ public class Xifrar {
         }
         return sKey;
     }
-    public static byte[] encryptData(byte[] data, SecretKey sec) {
+    public static byte[] encryptData(byte[] data, PublicKey sec) {
         byte[] encryptedData = null;
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
