@@ -1,14 +1,12 @@
 package A4;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
 import java.util.Arrays;
 
 public class Xifrar {
-
+    //serveixen per xifrar dades i ho guarda com a secret key
     public static SecretKey keygenKeyGeneration(int keySize){
         SecretKey sKey = null;
         if ((keySize == 128)||(keySize == 192)||(keySize == 256)) {
@@ -38,7 +36,8 @@ public class Xifrar {
         }
         return sKey;
     }
-    public static byte[] encryptData(byte[] data, PublicKey sec) {
+
+    public static byte[] encryptData(byte[] data, SecretKey sec) {
         byte[] encryptedData = null;
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -49,7 +48,8 @@ public class Xifrar {
         }
         return encryptedData;
     }
-    public static byte[] decryptData(byte[] data, PrivateKey sec){
+
+    public static byte[] decryptData(byte[] data, SecretKey sec) {
         byte[] encryptedData = null;
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -60,5 +60,23 @@ public class Xifrar {
         }
         return encryptedData;
     }
+    /*
+    public static byte[] decryptData(byte[] data, SecretKey sec) throws BadPaddingException {
+        byte[] encryptedData = null;
+        try {
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, sec);
+            encryptedData =  cipher.doFinal(data);
+        } catch (NoSuchPaddingException ex) {
+            ex.printStackTrace();
+        } catch (NoSuchAlgorithmException  ex) {
+            ex.printStackTrace();
+        } catch (IllegalBlockSizeException  ex) {
+            ex.printStackTrace();
+        } catch (InvalidKeyException  ex) {
+            ex.printStackTrace();
+        }
+        return encryptedData;
+    }*/
 
 }
