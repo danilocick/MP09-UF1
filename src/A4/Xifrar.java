@@ -48,7 +48,6 @@ public class Xifrar {
         }
         return encryptedData;
     }
-
     public static byte[] decryptData(byte[] data, SecretKey sec) {
         byte[] encryptedData = null;
         try {
