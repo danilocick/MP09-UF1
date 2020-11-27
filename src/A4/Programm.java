@@ -51,6 +51,7 @@ public class Programm {
         System.out.println("-----------");
         System.out.println("-----------");
         System.out.println("-----------");
+        
 
         //Desxifra el text del punt 6 i comprova que donant una paraula de pas incorrecte salta l'excepció BadPaddingException
         String msg3 = "hola,bon dia";
