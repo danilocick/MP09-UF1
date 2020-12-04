@@ -111,9 +111,9 @@ public class Main {
         System.out.println("1.5");
         System.out.println("---------------");
 
-        byte[] dataBy = "data".getBytes();
+        byte[] manubrio = "manubrio".getBytes();
         PrivateKey privKey = pair.getPrivate();
-        byte[] firma = signData(dataBy,privKey);
+        byte[] firma = signData(manubrio,privKey);
         System.out.println(new String(firma));
 
         System.out.println("---------------");
@@ -121,7 +121,7 @@ public class Main {
         System.out.println("---------------");
 
         PublicKey publicKey = pair.getPublic();
-        boolean verificado = validateSignature(dataBy,firma,publicKey);
+        boolean verificado = validateSignature(manubrio,firma,publicKey);
         if(verificado == true) {
             System.out.println("esta verificada");
         }else System.out.println("No verificada");;
@@ -130,8 +130,22 @@ public class Main {
         System.out.println("2.1");
         System.out.println("---------------");
 
+
+
         System.out.println("---------------");
         System.out.println("2.2");
         System.out.println("---------------");
+
+        KeyPair claves = randomGenerate(1024);
+
+        PublicKey pubKey = claves.getPublic();
+        PrivateKey privateKey = claves.getPrivate();
+
+        byte[][] wrappedKeyEncrypt = encryptWrappedData(manubrio,pubKey);
+        byte[]  wrappedKeyDecrypt = decryptWrappedData(wrappedKeyEncrypt,privateKey);
+
+        System.out.println(new String);
+        System.out.println(new String(wrappedKeyDecrypt));
+
     }
 }
