@@ -3,12 +3,10 @@ package A5;
 import javax.crypto.SecretKey;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.security.KeyPair;
-import java.security.KeyStore;
+import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Scanner;
 import static A5.Xifrar.*;
@@ -90,5 +88,50 @@ public class Main {
             Certificate cert = (Certificate)i.next();
             System.out.println(cert);
         }
+
+        System.out.println("---------------");
+        System.out.println("1.4");
+        System.out.println("---------------");
+
+        String psswd = "usuari";
+        String alias = "lamevaclauM9";
+
+        FileInputStream is = new FileInputStream("keystore_danielh.ks");
+        KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
+        keystore.load(is, psswd.toCharArray());
+        Key key = keystore.getKey(alias, psswd.toCharArray());
+
+        if (key instanceof PrivateKey) {
+            Certificate cert = keystore.getCertificate(alias);
+            PublicKey publicKey = cert.getPublicKey();
+            System.out.println(publicKey.toString());
+        }
+
+        System.out.println("---------------");
+        System.out.println("1.5");
+        System.out.println("---------------");
+
+        byte[] dataBy = "data".getBytes();
+        PrivateKey privKey = pair.getPrivate();
+        byte[] firma = signData(dataBy,privKey);
+        System.out.println(new String(firma));
+
+        System.out.println("---------------");
+        System.out.println("1.6");
+        System.out.println("---------------");
+
+        PublicKey publicKey = pair.getPublic();
+        boolean verificado = validateSignature(dataBy,firma,publicKey);
+        if(verificado == true) {
+            System.out.println("esta verificada");
+        }else System.out.println("No verificada");;
+
+        System.out.println("---------------");
+        System.out.println("2.1");
+        System.out.println("---------------");
+
+        System.out.println("---------------");
+        System.out.println("2.2");
+        System.out.println("---------------");
     }
 }
