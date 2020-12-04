@@ -1,10 +1,15 @@
 package A5;
 
 import javax.crypto.SecretKey;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.KeyPair;
 import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.util.Collection;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Scanner;
 import static A5.Xifrar.*;
 
@@ -37,7 +42,7 @@ public class Main {
         System.out.println("Public Key: "+pair.getPublic());
 
         System.out.println("---------------");
-        System.out.println("2.1");
+        System.out.println("1.2.1");
         System.out.println("---------------");
 
         //Fés la lectura d’un dels keystore que tinguis al teu sistema i extreu-ne la següent informació:
@@ -58,7 +63,7 @@ public class Main {
 
 
         System.out.println("---------------");
-        System.out.println("2.2");
+        System.out.println("1.2.2");
         System.out.println("---------------");
 
         String pswd = "passwd";
@@ -72,5 +77,18 @@ public class Main {
                 ks.store(fileOutputStream, "passwd".toCharArray());
             }
         System.out.println(ks.getEntry("secretKeyAlias", protectionParameter));
+
+        System.out.println("---------------");
+        System.out.println("1.3");
+        System.out.println("---------------");
+
+        FileInputStream fileInputStream = new FileInputStream("cerdanielh.cer");
+        CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+        Collection c = certificateFactory.generateCertificates(fileInputStream);
+        Iterator i = c.iterator();
+        while (i.hasNext()) {
+            Certificate cert = (Certificate)i.next();
+            System.out.println(cert);
+        }
     }
 }
