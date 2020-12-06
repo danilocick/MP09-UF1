@@ -117,17 +117,18 @@ public class Xifrar {
     public static byte[][] encryptWrappedData(byte[] data, PublicKey pub) {
         byte[][] encWrappedData = new byte[2][];
         try {
-            KeyGenerator kgen = KeyGenerator.getInstance("AES");
-            kgen.init(128);
-            SecretKey sKey = kgen.generateKey();
+            KeyGenerator kG = KeyGenerator.getInstance("AES"); //es genera una clau publica
+            kG.init(128);
+            SecretKey sK = kG.generateKey(); //es crea la secret key
             Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.ENCRYPT_MODE, sKey);
-            byte[] encMsg = cipher.doFinal(data);
+            //https://docs.oracle.com/javase/7/docs/api/javax/crypto/Cipher.html
+            cipher.init(Cipher.ENCRYPT_MODE, sK); // cryptographic cipher for encryption and decryption
+            byte[] encMsg = cipher.doFinal(data); // s'encripta el missatge
             cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.WRAP_MODE, pub);
-            byte[] encKey = cipher.wrap(sKey);
-            encWrappedData[0] = encMsg;
-            encWrappedData[1] = encKey;
+            byte[] encKey = cipher.wrap(sK);//s'encripta la clau privada
+            encWrappedData[0] = encMsg; //es guarda el missatge encriptat a l'array wrapped
+            encWrappedData[1] = encKey;//es guarda la clau xifrada  encriptat a l'array wrapped
         } catch (Exception  ex) {
             System.err.println("Ha succeït un error xifrant: " + ex);
         }
@@ -139,9 +140,9 @@ public class Xifrar {
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.UNWRAP_MODE, pub);
-            Key skey = cipher.unwrap(data[1],"AES",Cipher.SECRET_KEY);
+            Key sK = cipher.unwrap(data[1],"AES",Cipher.SECRET_KEY);
             cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.DECRYPT_MODE, skey);
+            cipher.init(Cipher.DECRYPT_MODE, sK);
             encMsg = cipher.doFinal(data[0]);
         } catch (Exception  ex) {
             System.err.println("Ha succeït un error desxifrant: " + ex);
